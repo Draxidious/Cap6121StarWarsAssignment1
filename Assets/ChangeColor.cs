@@ -35,7 +35,9 @@ public class ChangeColor : MonoBehaviour
     {
         if (objectRenderer != null && objectRenderer.material != null)
         {
-            objectRenderer.enabled = false;
+            if(objectRenderer.enabled) objectRenderer.enabled = false;
+            else objectRenderer.enabled = true;
+            
         }
         else
         {
