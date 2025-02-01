@@ -15,34 +15,28 @@ public class TrainingDroid : MonoBehaviour
 	public GameObject body;
 	public float bodyRadius;
 	public GameObject player;
-	public Transform pointB;
-	public float speed;
-	public Transform headProxy;
-	private List<Vector3> futurePositions = new List<Vector3>();
-	public float worldWidth;
 
+
+	public Transform headProxy;
+
+
+	public Droid droid;
 	public GameObject ghost;
 	public GameObject ghostBody;
 	public GameObject ghostHead;
 	public Transform ghostHeadProxy;
 
-	public bool inFuture;
-	public int futureIndex;
-	public int futureSteps;
+	Rigidbody rb;
+	Rigidbody ghostRB;
+
 	//public PostProcess shader;
 
 	private Vector3 spinDirection;
 	void Start()
 	{
-		// Set initial position of the ball at the start point
-		spinDirection = pointB.position - transform.position;
-		for (int i = 0; i < 15; i++)
-		{
-			addFuture(true);
-		}
-		ghost.SetActive(false);
-		//shader.enabled = false;
-
+		rb = GetComponent<Rigidbody>();
+		ghostRB = ghost.GetComponent<Rigidbody>();
+		spinDirection = droid.pointB.position - transform.position;
 	}
 
 	void Update()
@@ -50,74 +44,79 @@ public class TrainingDroid : MonoBehaviour
 
 		headProxy.LookAt(player.transform);
 		ghostHeadProxy.LookAt(player.transform);
-		if ((body.transform.position == pointB.position) ||( inFuture &&(ghost.transform.position == pointB.position)))
-		{
-			reachedPoint();
+		float step = Time.deltaTime * droid.speed;
+		updateRotation(step);
+	}
 
-		}
 
-		var step = Time.deltaTime * speed;
+
+	public void reachedPoint()
+	{
+		spinDirection = (droid.pointB.position - transform.position);
+		//rb.AddForce(droid.pointB.position - transform.position);
+		
+
+
+		//if(!droid.inFuture){
+		//	spinDirection /= spinDirection.magnitude;
+		//}
+
+		//spinDirection.x /= spinDirection.magnitude;
+		//spinDirection.y /= spinDirection.magnitude;
+		//spinDirection.z /= spinDirection.magnitude;
+	}
+
+	public void updateRotation(float step)
+	{
 		float degX = ((spinDirection.x * step)) / bodyRadius * Mathf.Rad2Deg;
 		float degZ = ((spinDirection.z * step)) / bodyRadius * Mathf.Rad2Deg;
 		float degY = ((spinDirection.y * step)) / bodyRadius * Mathf.Rad2Deg;
-		if (!inFuture)
+		if (!droid.inFuture)
 		{
-			Vector3 direction = Vector3.MoveTowards(body.transform.position, pointB.position, step);
-			transform.position = direction;
-			body.transform.Rotate(degX, degY, degZ);
-		}
-		Vector3 ghostDirection = Vector3.MoveTowards(ghostBody.transform.position, pointB.position, step);
-		ghost.transform.position = ghostDirection;
-		ghostBody.transform.Rotate(degX, degY, degZ);
+			Vector3 direction = droid.pointB.position - transform.position;
+			float distance = direction.magnitude;
+				// Calculate the force to apply.  We normalize the direction
+				// so the force is consistent regardless of distance.
+				Vector3 forceToApply = direction.normalized * droid.speed;
 
+				// Optional: Speed Limiting
+				
 
-	}
-	void addFuture(bool init = false)
-	{
-		float upper = worldWidth / 2f;
-		float lower = -1 * upper;
-		Vector3 pos = new Vector3(UnityEngine.Random.Range(lower, upper), 0.5f, UnityEngine.Random.Range(lower, upper));
-		futurePositions.Add(pos);
-		if (!init)
-		{
-			futurePositions.RemoveAt(0);
-		}
-	}
-
-	public void seeFuture()
-	{
-		inFuture = true;
-		ghost.SetActive(true);
-		futureIndex = 0;
-		//shader.enabled =true;
-	}
-	void reachedPoint()
-	{
-		
-		pointB.position = futurePositions[futureIndex];
-		Debug.Log(inFuture.ToString());
-		if (inFuture)
-		{
-			Debug.LogWarning( futureIndex.ToString());
-			futureIndex++;
-			if ((futureIndex == futureSteps))
-			{
-				inFuture = false;
-				//shader.enabled = false;
-				futureIndex = 0;
-				ghost.SetActive(false);
-				pointB.position = futurePositions[0];
-			}
+				rb.AddForce(forceToApply);
+			
+			//Vector3 direction = Vector3.MoveTowards(body.transform.position, droid.pointB.position, step);
+			////Vector3 direction =droid.pointB.position  - body.transform.position;
+			////transform.position = direction;
+			//direction /= direction.magnitude;
+			//direction *= droid.speed;
+			//rb.MovePosition(direction);
+			//rb.Move(direction, new Quaternion(degX, degY, degZ, body.transform.rotation.w));
+			//body.transform.Rotate(degX, degY, degZ);
+			//ghost.transform.position = direction;
+			ghost.transform.position = transform.position;
+			//ghostBody.transform.Rotate(degX, degY, degZ);
 		}
 		else
 		{
-			addFuture();
+			Vector3 ghostDirection = droid.pointB.position - ghost.transform.position;
+			float distance = ghostDirection.magnitude;
+			// Calculate the force to apply.  We normalize the direction
+			// so the force is consistent regardless of distance.
+			Vector3 forceToApply = ghostDirection.normalized * droid.speed;
+
+			// Optional: Speed Limiting
+
+
+			ghostRB.AddForce(forceToApply);
+			rb.linearVelocity = Vector3.zero;
+			rb.angularVelocity = Vector3.zero;
 			
+			gameObject.transform.position = droid.stayPut.position;
+			//Vector3 ghostDirection = Vector3.MoveTowards(ghostBody.transform.position, droid.pointB.position, step);
+			
+
 		}
-		spinDirection = (pointB.position - transform.position);
-		spinDirection.x /= spinDirection.magnitude;
-		spinDirection.y /= spinDirection.magnitude;
-		spinDirection.z /= spinDirection.magnitude;
+		
 	}
 
 

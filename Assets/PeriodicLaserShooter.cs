@@ -15,6 +15,7 @@ public class PeriodicLaserShooter : MonoBehaviour
     public float firingRange = 20f; // Range within which the laser can be fired
 
     private Coroutine firingCoroutine;
+    public bool inFuture = false;
 
     void Start()
     {
@@ -29,7 +30,7 @@ public class PeriodicLaserShooter : MonoBehaviour
 
     IEnumerator PeriodicFire()
     {
-        while (true)
+        while (!inFuture)
         {
             // Check if the target is within range
             if (target != null && Vector3.Distance(transform.position, target.position) <= firingRange)
