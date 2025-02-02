@@ -58,7 +58,7 @@ public class Droid : MonoBehaviour
 		Vector3 direction = transform.position - player.gameObject.transform.position;
 		Vector3 horizontalDirection = new Vector3(direction.x, 0f, direction.z);
 		distance = Mathf.Abs((direction).magnitude);
-		angle = Vector3.Angle(player.transform.forward,direction);
+		angle = Vector3.Angle(player.transform.forward, horizontalDirection);
 		
 		if ((Mathf.Abs((transform.position - pointB.position).magnitude) <0.3f) || (inFuture && (Mathf.Abs((ghost.transform.position - pointB.position).magnitude) < 0.3f)))
 		{
@@ -135,7 +135,6 @@ public class Droid : MonoBehaviour
 	public void takeDamage(float Damage)
 	{
 		health -= Damage;
-		Debug.LogWarning("Health: " + health.ToString() + " Angle: " + angle.ToString() + " Distance: " + distance);
 	}
 
 	public void GradientSetup(Gradient g)

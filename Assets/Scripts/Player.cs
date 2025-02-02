@@ -69,122 +69,81 @@ public class Player : MonoBehaviour
 	{
 		Debug.LogWarning("started");
 		fullHealth = health;
-		healthBarImage = healthBar.GetComponent<Image>();
+		healthBarRect = healthBar.GetComponent<RectTransform>();
 		healthGradient = new Gradient();
+		healthBarImage = healthBar.GetComponent<Image>();
+		healthBarWidth = healthBarRect.sizeDelta.x;
+		healthBarHeight = healthBarRect.sizeDelta.y;
 		GradientSetup(healthGradient);
-		lastFuture = DateTime.Now.Subtract(TimeSpan.FromSeconds(futureCooldown)); // Or use Time.time for consistency
+		fullHealth = health;
+		lastFuture = DateTime.Now.Subtract(TimeSpan.FromSeconds(futureCooldown));
 		lastHeal = DateTime.Now.Subtract(TimeSpan.FromSeconds(healCooldown));
 		lastForce = DateTime.Now.Subtract(TimeSpan.FromSeconds(forceCooldown));
-
 		RectTransform rT = futureBar.GetComponent<RectTransform>();
 		maxBar = new Vector2(rT.rect.width, rT.rect.height);
 		minBar = new Vector2(maxBar.x * 0.05f, rT.rect.height);
-		rT.pivot = new Vector2(0f, 0.5f); // Set pivot once in Start
-
+		rT.pivot = new Vector2(0f, 0.5f);
+		barX = rT.position.x;
 		healBarImg = healBar.GetComponent<Image>();
 		futureBarImg = futureBar.GetComponent<Image>();
 		forceBarImg = forceBar.GetComponent<Image>();
 		lightningBarImg = lightningBar.GetComponent<Image>();
+
+
 	}
 
+	// Update is called once per frame
 	void Update()
 	{
 		cooldownColor(healBarImg, healCooldown, lastHeal);
 		cooldownColor(futureBarImg, futureCooldown, lastFuture);
 		cooldownColor(forceBarImg, forceCooldown, lastForce);
 		cooldownColor(lightningBarImg, lightningCooldown, lastLightning);
-		Debug.LogWarning("Update");
+		healthBarUI ();
+
 	}
 	public void cooldownColor(Image image, float cooldown, DateTime lastUse)
-
 	{
 
-
-
 		float transitionDuration = cooldown; // Duration of the transition in seconds
-
 		Color startColor = Color.red;
-
 		Color middleColor = Color.yellow;
-
 		Color endColor = Color.green;
-
 		float timer = (float)(DateTime.Now.Subtract(lastUse).TotalSeconds);
 
-
-
 		float t = timer / cooldown;
-
 		RectTransform rt = image.gameObject.GetComponent<RectTransform>();
-
 		Rect rect = rt.rect;
-
 		rect.xMin = barX;
 
-
-
 		if (rect.width < maxBar.x)
-
 		{
-
 			rt.pivot = new Vector2(0f, 0.5f);
-
 			rt.sizeDelta = Vector2.Lerp(minBar, maxBar, t);
-
 		}
 
-
-
 		if (timer < transitionDuration)
-
 		{
-
-
-
 
 
 			// Transition from red to yellow to green
-
 			if (t < 0.5f)
-
 			{
-
 				// Transition from red to yellow
-
 				image.color = Color.Lerp(startColor, middleColor, t * 2f);
-
-				Debug.Log("red to yellow");
-
 			}
-
 			else
-
 			{
-
 				// Transition from yellow to green
-
 				image.color = Color.Lerp(middleColor, endColor, (t - 0.5f) * 2f);
-
-				Debug.Log("yellow to green");
-
 			}
 
-
-
 		}
-
 		else
-
 		{
-
 			// Ensure the final color is green
-
 			image.color = endColor;
-
-			Debug.Log("green");
-
 		}
-
 	}
 	public void leftHand()
 	{
@@ -285,6 +244,7 @@ public class Player : MonoBehaviour
 			Rigidbody rb = d.gameObject.GetComponent<Rigidbody>();
 			if ((rb != null) && (d.distance <= radius) && (d.angle <= angle))
 			{
+				
 				Vector3 forceDirection = d.gameObject.transform.position - gameObject.transform.position;
 				forceDirection = forceDirection / forceDirection.magnitude;
 				rb.AddForce(forceDirection.x * damage, damage * 0.5f, forceDirection.z * damage, ForceMode.Impulse);
@@ -339,26 +299,26 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	//void OnCollisionEnter(Collision other)
-	//{
-	//	if (other.gameObject.name == "Laser")
-	//	{
-	//		health -= UnityEngine.Random.Range(5, 15);
-	//	}
-	//}
+	void OnCollisionEnter(Collision other)
+	{
+		if (other.gameObject.name == "Laser")
+		{
+			health -= UnityEngine.Random.Range(5, 15);
+			Debug.LogWarning("playerHit");
+		}
+	}
 
-	//public void healthBarUI()
-	//{
-	//	// Calculate the fill amount (0 to 1)
-	//	float fillAmount = health / fullHealth;
+	public void healthBarUI()
+	{
+		// Calculate the fill amount (0 to 1)
+		float fillAmount = health / fullHealth;
+		// Set the fill amount of the image
+		//healthBarImage.rectTransform.sizeDelta = new Vector2(fillAmount * healthBarWidth, healthBarHeight);
+		healthBarRect.sizeDelta = new Vector2(healthBarWidth * fillAmount, healthBarHeight);
 
-	//	// Set the fill amount of the image
-	//	healthBarImage.fillAmount = fillAmount;
-	//	healthBarRect.sizeDelta = new Vector2(healthBarWidth * fillAmount, healthBarHeight);
-
-	//	// Set the color based on the health percentage
-	//	healthBarImage.color = healthGradient.Evaluate(fillAmount);
-	//}
+		// Set the color based on the health percentage
+		healthBarImage.color = healthGradient.Evaluate(fillAmount);
+	}
 
 	public void GradientSetup(Gradient g)
 	{
@@ -366,10 +326,10 @@ public class Player : MonoBehaviour
 		colors[0] = new GradientColorKey(Color.red, 0f);
 		colors[1] = new GradientColorKey(Color.yellow, 0.5f);
 		colors[2] = new GradientColorKey(Color.green, 1f);
-		var alphas = new GradientAlphaKey[3];
+		var alphas = new GradientAlphaKey[2];
 		alphas[0] = new GradientAlphaKey(1.0f, 0.0f);
 		alphas[1] = new GradientAlphaKey(1.0f, 0.5f);
-		alphas[2] = new GradientAlphaKey(1.0f, 1.0f);
+		alphas[1] = new GradientAlphaKey(1.0f, 1.0f);
 		g.SetKeys(colors, alphas);
 	}
 
