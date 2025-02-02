@@ -76,6 +76,7 @@ public class Droid : MonoBehaviour
 		futureIndex = 0;
 		stayPut = gameObject.transform;
 		shooter.inFuture = true;
+
 	}
 
 	public void addFuture(bool init = false)
@@ -149,4 +150,11 @@ public class Droid : MonoBehaviour
 		alphas[2] = new GradientAlphaKey(1.0f, 1.0f);
 		g.SetKeys(colors, alphas);
 	}
+
+    private void OnDrawGizmosSelected()
+    {
+        // Draw the firing range in the editor
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, worldWidth);
+    }
 }
