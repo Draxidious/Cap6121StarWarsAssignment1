@@ -1567,6 +1567,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002944840}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &2109650972 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: 6730655121625675543, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
+  m_PrefabInstance: {fileID: 1147730461038937209}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2137502071 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 334327549542102142, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
@@ -1852,6 +1857,10 @@ PrefabInstance:
       propertyPath: _transformFeatureStateProvider
       value: 
       objectReference: {fileID: 745377737}
+    - target: {fileID: 3957720327293743876, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
+      propertyPath: _filter
+      value: 
+      objectReference: {fileID: 2109650972}
     - target: {fileID: 3975122737462736286, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
       propertyPath: _hand
       value: 
