@@ -115,12 +115,17 @@ public class LaserBehavior : MonoBehaviour
         // If the laser hits an object with the tag, reverse direction
         if (other.CompareTag("Saber"))
         {
-            print("THIS IS RUNNING");
             // Original source is thing that shot it, and currentTarget is the thing that is NOW shooting it back
             Vector3 direction = (originalSource.transform.position - currentTarget.transform.position).normalized;
 
             // Align the capsule's Y-axis with the new direction
             transform.up = direction;
+
+            // Set tag to laser
+            gameObject.tag = "Laser";
+
+            // Play the laser bounce sound
+            other.gameObject.GetComponent<AudioSource>().Play();
 
             // Set the new velocity
             if (laserRigidbody != null)

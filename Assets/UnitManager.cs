@@ -23,6 +23,15 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        if(spawnedDroids.Count > 0 && spawnedDroids[0] == null)
+        {
+            spawnedDroids.RemoveAt(0);
+            StartTraining();
+        }
+    }
+
     private void GameManagerOnGameStateChanged(GameState state)
     {
         switch (state)

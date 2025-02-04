@@ -33,12 +33,16 @@ public class Droid : MonoBehaviour
 	RectTransform healthBarRect;
 	float healthBarHeight;
 	float healthBarWidth;
-	
 
-	void Start()
+    private BoxCollider damageCollider;
+    public string laserTag = "Laser";
+    public int laserDamage = 10;
+
+    void Start()
 	{
 		healthBarRect = healthBar.GetComponent<RectTransform>();
-		healthGradient = new Gradient();
+        damageCollider = GetComponent<BoxCollider>();
+        healthGradient = new Gradient();
 		GradientSetup(healthGradient);
 		fullHealth = health;
 		// Set initial position of the ball at the start point
@@ -136,6 +140,10 @@ public class Droid : MonoBehaviour
 	public void takeDamage(float Damage)
 	{
 		health -= Damage;
+		if(health <= 0)
+		{
+			Destroy(gameObject.transform.parent.gameObject);
+		}
 	}
 
 	public void GradientSetup(Gradient g)
@@ -156,5 +164,13 @@ public class Droid : MonoBehaviour
         // Draw the firing range in the editor
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, worldWidth);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(laserTag))
+        {
+			takeDamage(laserDamage);
+			Destroy(other.gameObject);
+        }
     }
 }

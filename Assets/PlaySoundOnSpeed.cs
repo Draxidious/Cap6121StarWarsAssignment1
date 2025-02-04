@@ -11,8 +11,6 @@ public class PlaySoundOnSpeed : MonoBehaviour
 
     void Start()
     {
-        // Get the AudioSource component attached to this object
-        audioSource = GetComponent<AudioSource>();
         // Initialize the last position
         lastPosition = parentTransform.position;
     }

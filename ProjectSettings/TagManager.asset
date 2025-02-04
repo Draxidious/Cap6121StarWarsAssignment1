@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Saber
   - Enemy
+  - QDSUITextSecondaryColor
+  - QDSUIToggleButton
+  - QDSUIIcon
+  - Laser
   layers:
   - Default
   - TransparentFX
