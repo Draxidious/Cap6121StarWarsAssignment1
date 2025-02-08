@@ -63,8 +63,12 @@ public class Droid : MonoBehaviour
 		Vector3 horizontalDirection = new Vector3(direction.x, 0f, direction.z);
 		distance = Mathf.Abs((direction).magnitude);
 		angle = Vector3.Angle(player.transform.forward, horizontalDirection);
-		
-		if ((Mathf.Abs((transform.position - pointB.position).magnitude) <0.3f) || (inFuture && (Mathf.Abs((ghost.transform.position - pointB.position).magnitude) < 0.3f)))
+
+		float checkDistance = Mathf.Sqrt( Mathf.Pow((transform.position.x - pointB.position.x), 2) + Mathf.Pow((transform.position.z - pointB.position.z), 2));
+		float checkDistanceGhost = Mathf.Sqrt(Mathf.Pow((ghost.transform.position.x - pointB.position.x), 2) + Mathf.Pow((ghost.transform.position.z - pointB.position.z), 2));
+
+
+		if ((Mathf.Abs(checkDistance) <0.6f) || (inFuture && (Mathf.Abs(checkDistanceGhost ) < 0.6f)))
 		{
 			reachedPoint();
 
@@ -98,7 +102,7 @@ public class Droid : MonoBehaviour
 	public void reachedPoint()
 	{
 
-		pointB.position = futurePositions[futureIndex];
+		pointB.localPosition = futurePositions[futureIndex];
 		
 		if (inFuture)
 		{

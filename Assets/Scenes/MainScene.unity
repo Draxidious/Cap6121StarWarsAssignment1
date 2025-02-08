@@ -246,7 +246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2235805866824680322, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
       propertyPath: droids.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2235805866824680322, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
       propertyPath: 'droids.Array.data[0]'
@@ -7224,7 +7224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &907948591
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12956,20 +12956,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 957131547726110665, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1558095204395872175, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1742095666072407837, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
+      propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2923845548471120311, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3830796047512567036, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4518972637856155847, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1653628286}
     - target: {fileID: 4518972637856155847, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
+      propertyPath: training
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518972637856155847, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
       propertyPath: worldWidth
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5691227787590514397, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1880669481}
+    - target: {fileID: 6900790585921786331, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.55
+      objectReference: {fileID: 0}
     - target: {fileID: 8654675696382654506, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
       propertyPath: player
       value: 
