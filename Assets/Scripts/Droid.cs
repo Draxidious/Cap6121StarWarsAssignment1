@@ -38,7 +38,10 @@ public class Droid : MonoBehaviour
     public string laserTag = "Laser";
     public int laserDamage = 10;
 
-    void Start()
+
+
+
+	void Start()
 	{
 		healthBarRect = healthBar.GetComponent<RectTransform>();
         damageCollider = GetComponent<BoxCollider>();
@@ -81,6 +84,9 @@ public class Droid : MonoBehaviour
 	{
 		inFuture = true;
 		ghost.SetActive(true);
+		gameObject.GetComponent<BoxCollider>().enabled = false;
+		//rb.constraints = RigidbodyConstraints.FreezeAll;
+		healthBar.SetActive(false);
 		futureIndex = 0;
 		stayPut = gameObject.transform;
 		shooter.inFuture = true;
@@ -91,6 +97,16 @@ public class Droid : MonoBehaviour
 	{
 		float upper = worldWidth / 2f;
 		float lower = -1 * upper;
+		float x = UnityEngine.Random.Range(lower, upper);
+		float z = UnityEngine.Random.Range(lower, upper);
+		float playerDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - player.transform.position.x), 2) + Mathf.Pow((transform.position.z - player.transform.position.z), 2));
+		float newDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - x), 2) + Mathf.Pow((transform.position.z -z), 2));
+		while (newDistance >= playerDistance && !training)
+		{
+			x = UnityEngine.Random.Range(lower, upper);
+			z = UnityEngine.Random.Range(lower, upper);
+			newDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - x), 2) + Mathf.Pow((transform.position.z - z), 2));
+		}
 		Vector3 pos = new Vector3(UnityEngine.Random.Range(lower, upper), 0.5f, UnityEngine.Random.Range(lower, upper));
 		futurePositions.Add(pos);
 		if (!init)
@@ -115,6 +131,9 @@ public class Droid : MonoBehaviour
 				ghost.SetActive(false);
 				pointB.position = futurePositions[0];
 				shooter.inFuture = false;
+				gameObject.GetComponent<BoxCollider>().enabled = true;
+				//rb.constraints = RigidbodyConstraints.None;
+				healthBar.SetActive(true);
 			}
 		}
 		else
@@ -122,10 +141,7 @@ public class Droid : MonoBehaviour
 			addFuture();
 
 		}
-		if (training)
-		{
 			trainingDroid.reachedPoint();
-		}
 	}
 
 	public void healthBarUI()
@@ -177,4 +193,6 @@ public class Droid : MonoBehaviour
 			Destroy(other.gameObject);
         }
     }
+
+
 }

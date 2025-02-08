@@ -5,8 +5,14 @@ public class UnitManager : MonoBehaviour
 {
     public GameObject droidPrefab;
     [SerializeField] private TrainingMode trainingMode;
+    [SerializeField] private TrainingMode Level1Mode;
+    [SerializeField] private TrainingMode Level2Mode;
+	[SerializeField] private TrainingMode Level3Mode;
 
-    private List<GameObject> spawnedDroids = new List<GameObject>();
+
+	private List<GameObject> spawnedDroids = new List<GameObject>();
+
+    public Player player;
 
     private void Awake()
     {
@@ -22,14 +28,42 @@ public class UnitManager : MonoBehaviour
             SpawnDroid(spawnLocations[i], droidObjects[i]);
         }
     }
+	public void StartLevel1()
+	{
+		List<Vector3> spawnLocations = Level1Mode.getSpawnLocations();
+		List<GameObject> droidObjects = Level1Mode.getDroidObjects();
+		for (int i = 0; i < spawnLocations.Count; i++)
+		{
+			SpawnDroid(spawnLocations[i], droidObjects[i]);
+		}
+	}
+	public void StartLevel2()
+	{
+		List<Vector3> spawnLocations = Level2Mode.getSpawnLocations();
+		List<GameObject> droidObjects = Level2Mode.getDroidObjects();
+		for (int i = 0; i < spawnLocations.Count; i++)
+		{
+			SpawnDroid(spawnLocations[i], droidObjects[i]);
+		}
+	}
+	public void StartLevel3()
+	{
+		List<Vector3> spawnLocations = Level2Mode.getSpawnLocations();
+		List<GameObject> droidObjects = Level2Mode.getDroidObjects();
+		for (int i = 0; i < spawnLocations.Count; i++)
+		{
+			SpawnDroid(spawnLocations[i], droidObjects[i]);
+		}
+	}
 
-    public void Update()
+	public void Update()
     {
         if(spawnedDroids.Count > 0 && spawnedDroids[0] == null)
         {
             spawnedDroids.RemoveAt(0);
             StartTraining();
-        }
+			player.getDroids();
+		}
     }
 
     private void GameManagerOnGameStateChanged(GameState state)
@@ -38,17 +72,18 @@ public class UnitManager : MonoBehaviour
         {
             case GameState.TrainingState:
                 StartTraining();
-                break;
+				break;
             default:
                 break;
         }
+        
     }
 
     public void SpawnDroid(Vector3 position, GameObject droid)
     {
         GameObject newDroid = Instantiate(droid, position, Quaternion.identity);
         newDroid.SetActive(true);
-        spawnedDroids.Add(newDroid);
+        player.droids.Add(newDroid.GetComponent<droidTopLevel>().droid);
     }
 
     

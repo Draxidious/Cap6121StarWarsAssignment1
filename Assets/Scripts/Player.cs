@@ -48,6 +48,14 @@ public class Player : MonoBehaviour
 	public ParticleSystem lightningParticles;
 	public ParticleSystem lightningParticlesL;
 
+	public TrainingMode trainingMode;
+	public TrainingMode level1;
+	public TrainingMode level2;
+	public TrainingMode level3;
+
+	public GameObject DroidList;
+
+
 	public AudioSource SpecialMoveAudio;
 
 	Vector2 minBar;
@@ -67,7 +75,6 @@ public class Player : MonoBehaviour
 	Gradient healthGradient;
 	void Start()
 	{
-		Debug.LogWarning("started");
 		fullHealth = health;
 		healthBarRect = healthBar.GetComponent<RectTransform>();
 		healthGradient = new Gradient();
@@ -88,6 +95,7 @@ public class Player : MonoBehaviour
 		futureBarImg = futureBar.GetComponent<Image>();
 		forceBarImg = forceBar.GetComponent<Image>();
 		lightningBarImg = lightningBar.GetComponent<Image>();
+		getDroids();
 
 
 	}
@@ -99,7 +107,8 @@ public class Player : MonoBehaviour
 		cooldownColor(futureBarImg, futureCooldown, lastFuture);
 		cooldownColor(forceBarImg, forceCooldown, lastForce);
 		cooldownColor(lightningBarImg, lightningCooldown, lastLightning);
-		healthBarUI ();
+		healthBarUI();
+
 
 	}
 	public void cooldownColor(Image image, float cooldown, DateTime lastUse)
@@ -217,7 +226,7 @@ public class Player : MonoBehaviour
 			float impact = (1 - (d.distance / radius));
 			float force = forceForce * impact * forceMultiplier;
 			Rigidbody rb = d.gameObject.GetComponent<Rigidbody>();
-			if ((rb != null) && (d.distance <= radius))
+			if ((rb != null) && (d.distance <= radius) && (d.gameObject.activeInHierarchy))
 			{
 				Vector3 forceDirection = d.gameObject.transform.position - gameObject.transform.position;
 				forceDirection = forceDirection / forceDirection.magnitude;
@@ -244,10 +253,10 @@ public class Player : MonoBehaviour
 			Rigidbody rb = d.gameObject.GetComponent<Rigidbody>();
 			if ((rb != null) && (d.distance <= radius) && (d.angle <= angle))
 			{
-				
+
 				Vector3 forceDirection = d.gameObject.transform.position - gameObject.transform.position;
 				forceDirection = forceDirection / forceDirection.magnitude;
-				rb.AddForce(forceDirection.x * damage, damage * 0.5f, forceDirection.z * damage, ForceMode.Impulse);
+				rb.AddForce(forceDirection.x * damage/2, damage * 0.5f/2, forceDirection.z * damage/2, ForceMode.Impulse);
 
 				d.takeDamage(damage);
 			}
@@ -272,7 +281,6 @@ public class Player : MonoBehaviour
 			RectTransform rt = lightningBar.GetComponent<RectTransform>();
 			rt.sizeDelta = new Vector2(0, maxBar.y);
 			Lightning();
-			//Debug.LogWarning("LightningDamage function Run");
 		}
 	}
 
@@ -333,4 +341,14 @@ public class Player : MonoBehaviour
 		g.SetKeys(colors, alphas);
 	}
 
-}
+	public void getDroids()
+	{
+
+	}
+		void HandleGameStateChange(GameState newState)
+		{
+			Debug.LogWarning("change");
+			getDroids();
+		}
+
+	}
