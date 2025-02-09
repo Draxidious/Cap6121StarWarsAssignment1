@@ -10,6 +10,7 @@ TagManager:
   - QDSUIToggleButton
   - QDSUIIcon
   - Laser
+  - LaserInitial
   layers:
   - Default
   - TransparentFX
