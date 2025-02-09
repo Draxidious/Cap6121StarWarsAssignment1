@@ -14223,7 +14223,7 @@ GameObject:
   - component: {fileID: 4127257167594524350}
   - component: {fileID: 5691227787590514397}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Shooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14334,6 +14334,7 @@ MonoBehaviour:
   target: {fileID: 0}
   laserSpeed: 10
   returnLaserSpeed: 15
+  laserDamageToPlayer: 10
   minFireInterval: 2
   maxFireInterval: 5
   firingRange: 20

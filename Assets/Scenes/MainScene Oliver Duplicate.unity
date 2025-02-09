@@ -8116,7 +8116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startStateMenu: {fileID: 4441869839451927467}
-  endTrainingMenu: {fileID: 228982635}
+  trainingStateMenu: {fileID: 0}
 --- !u!1 &624879714 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 957131547726110665, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
@@ -8836,7 +8836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 7358e191-33b7-43ca-b066-b2f00531ac66
-  instanceId: c4d90849-b532-4ddb-ab77-700fa8ee502d
+  instanceId: 9ccd68d6-2ac9-4a55-802c-281a5859dfe3
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -11753,7 +11753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 3f1827c2-c682-46d8-999e-0954e37e833e
-  instanceId: 0e4f7502-e4a0-441c-92ee-a8ff8826abfa
+  instanceId: 9b7466d3-9cd2-4671-aeee-50f7a12ce3e3
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 20b9ad69-c205-488d-a6b2-d3d7ca6c1e53
@@ -12094,6 +12094,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 5134752112205400926}
+    - target: {fileID: 5691227787590514397, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
+      propertyPath: laserDamageToPlayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7545813988046852920, guid: 6c3c0e2d27e6d184486dfff0d571785f, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -30481,7 +30485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 0393ca30-f2a9-4865-a40f-f9a68d01c3a9
-  instanceId: 1ea1263e-2625-4c63-a428-e6a4ab70e13a
+  instanceId: 14a5364b-5744-4439-b826-5d9ca9d1d16f
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -42158,7 +42162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: f61a01e5-61c7-4589-bd2d-107bccae8f02
-  instanceId: d854109f-ba52-4c4b-bc93-464953a93e7c
+  instanceId: dc9653bc-2de7-412c-9649-2dbb0fd4a774
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -42246,7 +42250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 81f55626-5fad-45e9-a1df-184f330da7ba
-  instanceId: 05d3ac38-d25f-4701-8019-4190ae8c2fab
+  instanceId: 86fb7e5e-1d90-463b-8a26-2c81a0b26bea
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -57751,7 +57755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 5817f7c0-f2a5-45f9-a5ca-64264e0166e8
-  instanceId: 001a6c23-f73b-40a3-9a18-2255476e1bcc
+  instanceId: 2aa46bb3-3c36-4477-adeb-8cd68ba42d19
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -59576,7 +59580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 6b67162c-2460-4766-a931-980388647573
-  instanceId: 889ade23-0e3e-4bd0-ad6f-a91e8ec1d87b
+  instanceId: 005765af-aefb-4cb0-be86-2f985c4327ef
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -65960,7 +65964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 8b26b298-7bf4-490e-b245-a039c0184303
-  instanceId: 8ff7a429-7b02-4e34-830f-7e9259c06fab
+  instanceId: 638228c5-d7e8-450a-b7d7-5ba894d62d14
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -70173,7 +70177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 5817f7c0-f2a5-45f9-a5ca-64264e0166e8
-  instanceId: 164e618b-a369-49f7-9abb-eaf238a20e50
+  instanceId: 43f73fb0-e948-4862-a0f2-e45a1f5aece8
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -88278,7 +88282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 8b26b298-7bf4-490e-b245-a039c0184303
-  instanceId: 61060663-fe95-444e-bd0e-abba2aed7c99
+  instanceId: a5b05d10-959f-477f-ae19-9494a0c2a181
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -90046,7 +90050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: f61a01e5-61c7-4589-bd2d-107bccae8f02
-  instanceId: 3d881204-65a6-49c0-b7df-ba64a0cdf8d0
+  instanceId: b890028d-b213-4345-9e58-d9f6721ad143
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -91340,7 +91344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: e47682b9-c270-40b1-b16d-90b627a5ce1b
-  instanceId: d1779b98-d725-4cec-b053-8b6f25d75abd
+  instanceId: 5e236b62-de97-408f-a464-ef090b2ff2d0
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -91465,7 +91469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 316c5b1d-a5e4-49f2-a663-15fd22dbcba9
-  instanceId: ea7c0cd6-2865-409f-a7d5-bb25c3bea7c3
+  instanceId: 10100a9f-caf8-484a-bd4e-da89e1d44e17
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -93218,7 +93222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 27673ac1-cdb0-443f-a07d-6ff1d34daeca
-  instanceId: 6b8f83cb-cb0a-438b-8624-0022230f9eb0
+  instanceId: 13ccd41e-4c76-494f-9cd7-a0acf6c4e85d
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -94002,7 +94006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 27673ac1-cdb0-443f-a07d-6ff1d34daeca
-  instanceId: 297fc92b-1f1e-47a4-bd20-c95e69cad441
+  instanceId: 2707797c-9aa8-4214-ac38-fb7a836095a0
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -96332,7 +96336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 6b67162c-2460-4766-a931-980388647573
-  instanceId: ae5dc7ac-94bf-48a0-bfc8-0577ff3d1a02
+  instanceId: 9524d171-c058-4cdd-b892-d116b1aa2553
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -97231,7 +97235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: f10154e0-16b2-492f-97d0-6639f69e7df6
-  instanceId: f86b75dd-2b9b-4b58-ae01-186da07fbc96
+  instanceId: 39df6a24-ce63-4d0f-b6cf-253a3ed32581
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 
@@ -103911,7 +103915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: 316c5b1d-a5e4-49f2-a663-15fd22dbcba9
-  instanceId: 7fd15b66-e91a-4f6e-99fa-4e401d90c3e3
+  instanceId: d08cb377-09b0-4bd6-9ff1-70fadba9353d
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: 

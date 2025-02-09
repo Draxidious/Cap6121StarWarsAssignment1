@@ -375,25 +375,25 @@ public class Player : MonoBehaviour
 	}
 	public void LevelUp()
 	{
-		Debug.LogWarning("LevelingUp");
-		Debug.LogWarning(gameManager.State);
-		if(droidsKilled == 1)
-		{
-			Debug.LogWarning("End of Training");
-			gameManager.SetEndTrainingState();
-		}
-		else if(droidsKilled == 3)
-		{
-			gameManager.SetLevel2State();
-		}
-		else if (droidsKilled == 6)
-		{
-			gameManager.SetLevel3State();
-		}
-		else if (droidsKilled == 10)
-		{
-			gameManager.SetBossBattleState();
-		}
+		//Debug.LogWarning("LevelingUp");
+		//Debug.LogWarning(gameManager.State);
+		//if(droidsKilled == 1)
+		//{
+		//	Debug.LogWarning("End of Training");
+		//	gameManager.SetEndTrainingState();
+		//}
+		//else if(droidsKilled == 3)
+		//{
+		//	gameManager.SetLevel2State();
+		//}
+		//else if (droidsKilled == 6)
+		//{
+		//	gameManager.SetLevel3State();
+		//}
+		//else if (droidsKilled == 10)
+		//{
+		//	gameManager.SetBossBattleState();
+		//}
 
 		//gameManager.SetLevel1State();
 		//gameManager.UpdateGameState();

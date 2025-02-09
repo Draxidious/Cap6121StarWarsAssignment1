@@ -128,7 +128,7 @@ public class LaserBehavior : MonoBehaviour
             gameObject.tag = "Laser";
 
             // Play the laser bounce sound
-            other.gameObject.GetComponent<AudioSource>().Play();
+            other.gameObject.GetComponent<AudioSource>()?.Play();
 
             // Set the new velocity
             if (laserRigidbody != null)

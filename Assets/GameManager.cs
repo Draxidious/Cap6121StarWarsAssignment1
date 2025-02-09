@@ -22,29 +22,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateGameState(GameState newState)
     {
-        switch (newState)
-        {
-            case GameState.StartState:
-                break;
-            case GameState.TrainingState:
-                break;
-			case GameState.EndTrainingState:
-				break;
-			case GameState.Level1State:
-                break;
-            case GameState.Level2State:
-                break;
-            case GameState.Level3State:
-                break;
-            case GameState.BossBattleState:
-                break;
-            case GameState.VictoryState:
-                break;
-            case GameState.DeathState:
-                break;
-            default:
-                break;
-        }
+        State = newState;
         OnGameStateChange?.Invoke(newState);
     }
     public void SetStartState() => UpdateGameState(GameState.StartState);
