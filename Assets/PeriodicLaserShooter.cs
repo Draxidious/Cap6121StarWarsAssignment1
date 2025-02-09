@@ -8,6 +8,7 @@ public class PeriodicLaserShooter : MonoBehaviour
     public Transform target; // Target GameObject the laser will shoot towards
     public float laserSpeed = 10f; // Speed of the laser
     public float returnLaserSpeed = 15f; // Speed of the laser when returning
+    public float laserDamageToPlayer = 10f;
 
     [Header("Firing Configuration")]
     public float minFireInterval = 5f; // Minimum interval between shots
@@ -54,6 +55,8 @@ public class PeriodicLaserShooter : MonoBehaviour
 
         // Instantiate the laser object at the current position
         GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+
+        laser.GetComponent<LaserSelfDestruct>().laserDmg = laserDamageToPlayer;
 
         // Calculate direction to the target
         Vector3 direction = (target.position - transform.position).normalized;

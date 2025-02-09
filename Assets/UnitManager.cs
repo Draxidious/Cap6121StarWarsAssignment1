@@ -58,7 +58,7 @@ public class UnitManager : MonoBehaviour
 
 	public void Update()
     {
-        if(spawnedDroids.Count > 0 && spawnedDroids[0] == null)
+        if(GameManager.instance.State == GameState.TrainingState && spawnedDroids.Count > 0 && spawnedDroids[0] == null)
         {
             spawnedDroids.RemoveAt(0);
             StartTraining();
@@ -83,6 +83,15 @@ public class UnitManager : MonoBehaviour
 				StartLevel3();
 				break;
 			default:
+                print("DESTROY ALL DROIDS: " + spawnedDroids);
+                foreach(GameObject obj in spawnedDroids)
+                {
+                    if(obj!=null)
+                    {
+                        Destroy(obj);
+                    }
+                }
+                spawnedDroids.Clear();
                 break;
         }
         
@@ -92,6 +101,7 @@ public class UnitManager : MonoBehaviour
     {
         GameObject newDroid = Instantiate(droid, position, Quaternion.identity);
         newDroid.SetActive(true);
+        spawnedDroids.Add(newDroid);
         player.droids.Add(newDroid.GetComponent<droidTopLevel>().droid);
     }
 
