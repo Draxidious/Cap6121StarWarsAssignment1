@@ -50,6 +50,8 @@ public class Droid : MonoBehaviour
         damageCollider = GetComponent<BoxCollider>();
         healthGradient = new Gradient();
 		GradientSetup(healthGradient);
+		laserShooter.target = player.transform;
+		trainingDroid.player = player.gameObject;
 		fullHealth = health;
 		// Set initial position of the ball at the start point
 		
