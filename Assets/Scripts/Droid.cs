@@ -37,6 +37,7 @@ public class Droid : MonoBehaviour
     private BoxCollider damageCollider;
     public string laserTag = "Laser";
     public int laserDamage = 10;
+	public Transform playerLocation;
 
 
 
@@ -57,11 +58,13 @@ public class Droid : MonoBehaviour
 		healthBarImage = healthBar.GetComponent<Image>();
 		healthBarHeight = healthBarRect.sizeDelta.y;
 		healthBarWidth = healthBarRect.sizeDelta.x;
+		playerLocation = player.gameObject.transform;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		playerLocation = player.gameObject.transform;
 		Vector3 direction = transform.position - player.gameObject.transform.position;
 		Vector3 horizontalDirection = new Vector3(direction.x, 0f, direction.z);
 		distance = Mathf.Abs((direction).magnitude);
@@ -85,7 +88,6 @@ public class Droid : MonoBehaviour
 		inFuture = true;
 		ghost.SetActive(true);
 		gameObject.GetComponent<BoxCollider>().enabled = false;
-		//rb.constraints = RigidbodyConstraints.FreezeAll;
 		healthBar.SetActive(false);
 		futureIndex = 0;
 		stayPut = gameObject.transform;
@@ -99,14 +101,16 @@ public class Droid : MonoBehaviour
 		float lower = -1 * upper;
 		float x = UnityEngine.Random.Range(lower, upper);
 		float z = UnityEngine.Random.Range(lower, upper);
-		float playerDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - player.transform.position.x), 2) + Mathf.Pow((transform.position.z - player.transform.position.z), 2));
-		float newDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - x), 2) + Mathf.Pow((transform.position.z -z), 2));
-		//while (newDistance >= playerDistance && !training)
-		//{
-		//	x = UnityEngine.Random.Range(lower, upper);
-		//	z = UnityEngine.Random.Range(lower, upper);
-		//	newDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - x), 2) + Mathf.Pow((transform.position.z - z), 2));
-		//}
+		float currentDistance = Mathf.Sqrt(Mathf.Pow((transform.localPosition.x - playerLocation.localPosition.x), 2) + Mathf.Pow((transform.localPosition.z - playerLocation.localPosition.z), 2));
+		float newDistance = Mathf.Sqrt(Mathf.Pow((playerLocation.localPosition.x -  x), 2) + Mathf.Pow((playerLocation.localPosition.z - z), 2));
+		
+		while (newDistance <= currentDistance && !training)
+		{
+			x = UnityEngine.Random.Range(lower, upper);
+			z = UnityEngine.Random.Range(lower, upper);
+			newDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - x), 2) + Mathf.Pow((transform.position.z - z), 2));
+		}
+		Debug.LogWarning(newDistance >= currentDistance);
 		Vector3 pos = new Vector3(UnityEngine.Random.Range(lower, upper), 0.5f, UnityEngine.Random.Range(lower, upper));
 		futurePositions.Add(pos);
 		if (!init)
