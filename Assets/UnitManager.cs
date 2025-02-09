@@ -62,7 +62,6 @@ public class UnitManager : MonoBehaviour
         {
             spawnedDroids.RemoveAt(0);
             StartTraining();
-			player.getDroids();
 		}
     }
 
@@ -71,9 +70,19 @@ public class UnitManager : MonoBehaviour
         switch (state)
         {
             case GameState.TrainingState:
+                Debug.LogWarning("Training Started");
                 StartTraining();
 				break;
-            default:
+			case GameState.Level1State:
+				StartLevel1();
+				break;
+            case GameState.Level2State:
+                StartLevel2();
+                break;
+			case GameState.Level3State:
+				StartLevel3();
+				break;
+			default:
                 break;
         }
         

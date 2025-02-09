@@ -48,13 +48,9 @@ public class Player : MonoBehaviour
 	public ParticleSystem lightningParticles;
 	public ParticleSystem lightningParticlesL;
 
-	public TrainingMode trainingMode;
-	public TrainingMode level1;
-	public TrainingMode level2;
-	public TrainingMode level3;
-
 	public GameObject DroidList;
 
+	public GameManager gameManager;
 
 	public AudioSource SpecialMoveAudio;
 
@@ -65,6 +61,7 @@ public class Player : MonoBehaviour
 	bool L;
 	public int droidsKilled;
 	public List<Droid> droids = new List<Droid>();
+	public List<Droid> deadDroids = new List<Droid>();
 
 
 	public GameObject healthBar;
@@ -73,6 +70,14 @@ public class Player : MonoBehaviour
 	float healthBarHeight;
 	float healthBarWidth;
 	Gradient healthGradient;
+
+	public GameState state;
+	public List<TrainingMode> levels = new List<TrainingMode>();
+	//private void Awake()
+	//{
+	//	GameManager.OnGameStateChange += GameManagerOnGameStateChanged;
+	//}
+
 	void Start()
 	{
 		fullHealth = health;
@@ -95,7 +100,6 @@ public class Player : MonoBehaviour
 		futureBarImg = futureBar.GetComponent<Image>();
 		forceBarImg = forceBar.GetComponent<Image>();
 		lightningBarImg = lightningBar.GetComponent<Image>();
-		getDroids();
 
 
 	}
@@ -230,12 +234,15 @@ public class Player : MonoBehaviour
 			{
 				Vector3 forceDirection = d.gameObject.transform.position - gameObject.transform.position;
 				forceDirection = forceDirection / forceDirection.magnitude;
-				rb.AddForce(forceDirection.x * force, force * 0.5f, forceDirection.z * force, ForceMode.Impulse);
+				rb.AddForce(forceDirection.x * force/(2 * forceMultiplier), force * 0.5f/(2 * forceMultiplier), forceDirection.z * force / (2 * forceMultiplier), ForceMode.Impulse);
 				float damage = (1 - (d.distance / radius)) * forceDamage;
 				d.takeDamage(forceDamage * impact);
 			}
 
 		}
+
+		killDroids();
+
 
 
 	}
@@ -256,12 +263,13 @@ public class Player : MonoBehaviour
 
 				Vector3 forceDirection = d.gameObject.transform.position - gameObject.transform.position;
 				forceDirection = forceDirection / forceDirection.magnitude;
-				rb.AddForce(forceDirection.x * damage/2, damage * 0.5f/2, forceDirection.z * damage/2, ForceMode.Impulse);
+				rb.AddForce(forceDirection.x * damage/(2*damgeMultiplier), damage * 0.5f/ (2 * damgeMultiplier), forceDirection.z * damage/ (2 * damgeMultiplier), ForceMode.Impulse);
 
 				d.takeDamage(damage);
 			}
 
 		}
+		killDroids();
 
 
 	}
@@ -328,6 +336,8 @@ public class Player : MonoBehaviour
 		healthBarImage.color = healthGradient.Evaluate(fillAmount);
 	}
 
+
+
 	public void GradientSetup(Gradient g)
 	{
 		var colors = new GradientColorKey[3];
@@ -341,14 +351,54 @@ public class Player : MonoBehaviour
 		g.SetKeys(colors, alphas);
 	}
 
-	public void getDroids()
+	public void killDroids()
 	{
-
-	}
-		void HandleGameStateChange(GameState newState)
+		foreach (Droid d in deadDroids)
 		{
-			Debug.LogWarning("change");
-			getDroids();
+			droids.Remove(d);
+			d.gameObject.SetActive(false);
+			Destroy(d.trainingDroid);
+			Destroy(d.gameObject.transform.parent.gameObject);
+			droidsKilled++;
+
 		}
 
+		deadDroids.Clear();
+		if(droids.Count == 0)
+		{
+			LevelUp();
+		}
 	}
+	public void LevelUp()
+	{
+		Debug.LogWarning("LevelingUp");
+		Debug.LogWarning(gameManager.State);
+		gameManager.SetLevel1State();
+		//gameManager.UpdateGameState();
+		//if (gameManager.State == GameState.StartState)
+		//{
+		//	gameManager.SetLevel1State();
+		//}
+		//if (gameManager.State == GameState.TrainingState)
+		//{
+		//	gameManager.SetLevel1State();
+		//}
+		//else if (gameManager.State == GameState.Level1State)
+		//{
+		//	gameManager.SetLevel2State();
+		//}
+		//else if (gameManager.State == GameState.Level2State)
+		//{
+		//	gameManager.SetLevel3State();
+		//}
+
+	}
+
+	private void GameManagerOnGameStateChanged(GameState state)
+	{
+		
+
+	}
+
+
+}

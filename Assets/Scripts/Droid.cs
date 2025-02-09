@@ -162,7 +162,8 @@ public class Droid : MonoBehaviour
 		health -= Damage;
 		if(health <= 0)
 		{
-			Destroy(gameObject.transform.parent.gameObject);
+			player.deadDroids.Add(this);
+
 		}
 	}
 
