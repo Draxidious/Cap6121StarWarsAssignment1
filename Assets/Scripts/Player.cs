@@ -373,7 +373,7 @@ public class Player : MonoBehaviour
 	{
 		Debug.LogWarning("LevelingUp");
 		Debug.LogWarning(gameManager.State);
-		gameManager.SetLevel1State();
+		//gameManager.SetLevel1State();
 		//gameManager.UpdateGameState();
 		//if (gameManager.State == GameState.StartState)
 		//{
