@@ -174,7 +174,8 @@ public class Player : MonoBehaviour
 				L = false;
 			}
 			play.PlayOnce();
-			health = Mathf.Clamp(health, 0f, fullHealth);
+            health += healAmount;
+            health = Mathf.Clamp(health, 0f, fullHealth);
 			lastHeal = DateTime.Now;
 			RectTransform rt = healBar.GetComponent<RectTransform>();
 			rt.sizeDelta = new Vector2(0, maxBar.y);
