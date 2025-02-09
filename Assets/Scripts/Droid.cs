@@ -14,7 +14,7 @@ public class Droid : MonoBehaviour
 	public Player player;
 	public TrainingDroid trainingDroid;
 
-	private List<Vector3> futurePositions = new List<Vector3>();
+	 List<Vector3> futurePositions = new List<Vector3>();
 	public bool inFuture;
 	public int futureIndex;
 	public int futureSteps;
@@ -33,8 +33,10 @@ public class Droid : MonoBehaviour
 	RectTransform healthBarRect;
 	float healthBarHeight;
 	float healthBarWidth;
+	public PeriodicLaserShooter laserShooter;
 
-    private BoxCollider damageCollider;
+
+	private BoxCollider damageCollider;
     public string laserTag = "Laser";
     public int laserDamage = 10;
 	public Transform playerLocation;
@@ -50,10 +52,19 @@ public class Droid : MonoBehaviour
 		GradientSetup(healthGradient);
 		fullHealth = health;
 		// Set initial position of the ball at the start point
-		for (int i = 0; i < 15; i++)
+		
+		for (int i = 0; i < 10; i++)
 		{
 			addFuture(true);
+			
 		}
+		string output = "";
+		foreach (Vector3 v in futurePositions) {
+			output += " ( X:" + v.x + ", Z:" + v.z + ")  ";
+		}
+		Debug.LogWarning(output);
+
+		
 		ghost.SetActive(false);
 		healthBarImage = healthBar.GetComponent<Image>();
 		healthBarHeight = healthBarRect.sizeDelta.y;
@@ -87,7 +98,6 @@ public class Droid : MonoBehaviour
 	{
 		inFuture = true;
 		ghost.SetActive(true);
-		gameObject.GetComponent<BoxCollider>().enabled = false;
 		healthBar.SetActive(false);
 		futureIndex = 0;
 		stayPut = gameObject.transform;
@@ -110,7 +120,7 @@ public class Droid : MonoBehaviour
 			z = UnityEngine.Random.Range(lower, upper);
 			newDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - x), 2) + Mathf.Pow((transform.position.z - z), 2));
 		}
-		Debug.LogWarning(newDistance >= currentDistance);
+		//Debug.LogWarning(newDistance >= currentDistance);
 		Vector3 pos = new Vector3(UnityEngine.Random.Range(lower, upper), 0.5f, UnityEngine.Random.Range(lower, upper));
 		futurePositions.Add(pos);
 		if (!init)
@@ -133,11 +143,17 @@ public class Droid : MonoBehaviour
 				//shader.enabled = false;
 				futureIndex = 0;
 				ghost.SetActive(false);
-				pointB.position = futurePositions[0];
+				pointB.localPosition = futurePositions[0];
 				shooter.inFuture = false;
-				gameObject.GetComponent<BoxCollider>().enabled = true;
 				//rb.constraints = RigidbodyConstraints.None;
 				healthBar.SetActive(true);
+
+				string output = "";
+				foreach (Vector3 v in futurePositions)
+				{
+					output += " ( X:" + v.x + ", Z:" + v.z + ")  ";
+				}
+				Debug.LogWarning(output);
 			}
 		}
 		else

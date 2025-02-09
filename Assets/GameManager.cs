@@ -28,7 +28,9 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.TrainingState:
                 break;
-            case GameState.Level1State:
+			case GameState.EndTrainingState:
+				break;
+			case GameState.Level1State:
                 break;
             case GameState.Level2State:
                 break;
@@ -47,7 +49,8 @@ public class GameManager : MonoBehaviour
     }
     public void SetStartState() => UpdateGameState(GameState.StartState);
     public void SetTrainingState() => UpdateGameState(GameState.TrainingState);
-    public void SetLevel1State() => UpdateGameState(GameState.Level1State);
+	public void SetEndTrainingState() => UpdateGameState(GameState.EndTrainingState);
+	public void SetLevel1State() => UpdateGameState(GameState.Level1State);
     public void SetLevel2State() => UpdateGameState(GameState.Level2State);
     public void SetLevel3State() => UpdateGameState(GameState.Level3State);
     public void SetBossBattleState() => UpdateGameState(GameState.BossBattleState);
@@ -59,7 +62,8 @@ public enum GameState
 {
     StartState,
     TrainingState,
-    Level1State,
+	EndTrainingState,
+	Level1State,
     Level2State,
     Level3State,
     BossBattleState,
