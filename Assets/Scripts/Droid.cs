@@ -101,12 +101,12 @@ public class Droid : MonoBehaviour
 		float z = UnityEngine.Random.Range(lower, upper);
 		float playerDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - player.transform.position.x), 2) + Mathf.Pow((transform.position.z - player.transform.position.z), 2));
 		float newDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - x), 2) + Mathf.Pow((transform.position.z -z), 2));
-		while (newDistance >= playerDistance && !training)
-		{
-			x = UnityEngine.Random.Range(lower, upper);
-			z = UnityEngine.Random.Range(lower, upper);
-			newDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - x), 2) + Mathf.Pow((transform.position.z - z), 2));
-		}
+		//while (newDistance >= playerDistance && !training)
+		//{
+		//	x = UnityEngine.Random.Range(lower, upper);
+		//	z = UnityEngine.Random.Range(lower, upper);
+		//	newDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - x), 2) + Mathf.Pow((transform.position.z - z), 2));
+		//}
 		Vector3 pos = new Vector3(UnityEngine.Random.Range(lower, upper), 0.5f, UnityEngine.Random.Range(lower, upper));
 		futurePositions.Add(pos);
 		if (!init)
