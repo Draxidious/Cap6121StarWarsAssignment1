@@ -9,7 +9,7 @@ public class DamagePlayer : MonoBehaviour
     {
         if (other.CompareTag("LaserInitial"))
         {
-            player.health -= 5;
+            player.health -= other.gameObject.GetComponent<LaserSelfDestruct>().laserDmg;
             oof.Play();
         }
     }
