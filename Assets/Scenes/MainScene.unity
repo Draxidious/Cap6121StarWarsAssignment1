@@ -326,12 +326,36 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2760501524778064353, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
+      propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 51889968}
+    - target: {fileID: 2760501524778064353, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
+      propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1653628286}
+    - target: {fileID: 2760501524778064353, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
       propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2760501524778064353, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
+      propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SpawnSabers
+      objectReference: {fileID: 0}
+    - target: {fileID: 2760501524778064353, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
+      propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: useSpecialMove
+      objectReference: {fileID: 0}
+    - target: {fileID: 2760501524778064353, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
+      propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LightSaberSpawner, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2760501524778064353, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
       propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: Player, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2760501524778064353, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
+      propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3573126583141973301, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -586,10 +610,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c44318aaf15b8db4e9d71fadfb87c06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saber1: {fileID: 0}
-  saber2: {fileID: 0}
-  spawnLocation1: {fileID: 0}
-  spawnLocation2: {fileID: 0}
+  saber1: {fileID: 6966871082806605272, guid: bd62d4026d173494e8e175f97eb48e03, type: 3}
+  saber2: {fileID: 7609834937218043167, guid: 1b373cf3c06bd9f4faff76527ec15a97, type: 3}
+  spawnLocation1: {fileID: 1001553393}
+  spawnLocation2: {fileID: 1456034645}
 --- !u!1 &52488002
 GameObject:
   m_ObjectHideFlags: 0
@@ -8473,6 +8497,11 @@ MonoBehaviour:
   _pokeFinger: 1
   _maxGradientLength: 0.9
   _glowType: 31
+--- !u!4 &1001553393 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5535693084578509965, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
+  m_PrefabInstance: {fileID: 51889965}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1015294787
 GameObject:
   m_ObjectHideFlags: 0
@@ -9879,6 +9908,11 @@ MonoBehaviour:
   _pokeFinger: 1
   _maxGradientLength: 0.9
   _glowType: 31
+--- !u!4 &1456034645 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2678294256028043344, guid: 0a1e201b6620b2f4390bec336f13449a, type: 3}
+  m_PrefabInstance: {fileID: 51889965}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1487530856
 GameObject:
   m_ObjectHideFlags: 0
