@@ -12400,7 +12400,6 @@ MonoBehaviour:
   Level2Mode: {fileID: 1866181938}
   Level3Mode: {fileID: 734986080}
   BossMode: {fileID: 1066758995}
-  laserParent: {fileID: 0}
   spawnedDroids: []
   player: {fileID: 8687258148948048118}
 --- !u!1001 &1129393454
@@ -14674,6 +14673,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8687258148948048118}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1525919355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16438,6 +16449,17 @@ Transform:
   - {fileID: 1298906892}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1837630489 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1031335770457238312, guid: 69f69c6694ed611448a304a4c62891aa, type: 3}
+  m_PrefabInstance: {fileID: 399153947508302930}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44318aaf15b8db4e9d71fadfb87c06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1866181936
 GameObject:
   m_ObjectHideFlags: 0
@@ -18251,6 +18273,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5356113020086188, guid: 69f69c6694ed611448a304a4c62891aa, type: 3}
+      propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5356113020086188, guid: 69f69c6694ed611448a304a4c62891aa, type: 3}
+      propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8687258148948048118}
+    - target: {fileID: 5356113020086188, guid: 69f69c6694ed611448a304a4c62891aa, type: 3}
+      propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: useSpecialMove
+      objectReference: {fileID: 0}
+    - target: {fileID: 5356113020086188, guid: 69f69c6694ed611448a304a4c62891aa, type: 3}
+      propertyPath: _whenSelected.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Player, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 477190736859348727, guid: 69f69c6694ed611448a304a4c62891aa, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -18279,6 +18317,10 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1286610035}
+    - target: {fileID: 1026063164753244200, guid: 69f69c6694ed611448a304a4c62891aa, type: 3}
+      propertyPath: SaberSpawner
+      value: 
+      objectReference: {fileID: 1837630489}
     - target: {fileID: 1026063164753244200, guid: 69f69c6694ed611448a304a4c62891aa, type: 3}
       propertyPath: forceCooldown
       value: 2
