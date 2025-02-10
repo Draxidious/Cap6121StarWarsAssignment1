@@ -270,7 +270,7 @@ public class Player : MonoBehaviour
 			{
 				Vector3 forceDirection = d.gameObject.transform.position - gameObject.transform.position;
 				forceDirection = forceDirection / forceDirection.magnitude;
-				//rb.AddForce(forceDirection.x * force/(2 * forceMultiplier), force * 0.5f/(2 * forceMultiplier), forceDirection.z * force / (2 * forceMultiplier), ForceMode.Impulse);
+				rb.AddForce(forceDirection.x * force/(2 * forceMultiplier), force * 0.5f/(2 * forceMultiplier), forceDirection.z * force / (2 * forceMultiplier), ForceMode.Impulse);
 				float damage = (1 - (d.distance / radius)) * forceDamage;
 				d.takeDamage(forceDamage * impact);
 			}
@@ -278,8 +278,6 @@ public class Player : MonoBehaviour
 		}
 
 		killDroids();
-
-
 
 	}
 
@@ -370,7 +368,7 @@ public class Player : MonoBehaviour
 			playFL.PlayOnce();
 			playFR.PlayOnce();
 			SpecialMoveAudio.Play();
-			Lightning(2, 2, 2);
+			Lightning(2f, 2, 2);
 			Force(2, 2);
 			specialUsed = true;
 		}

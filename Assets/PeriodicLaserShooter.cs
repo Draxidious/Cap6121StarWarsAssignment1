@@ -26,12 +26,27 @@ public class PeriodicLaserShooter : MonoBehaviour
 
     void Update()
     {
-        // Optional: Add any logic to enable/disable the firing based on conditions (e.g., player input)
+        // Prevent firing when inFuture is true
+        if (inFuture)
+        {
+            if (firingCoroutine != null)
+            {
+                StopCoroutine(firingCoroutine);
+                firingCoroutine = null;
+            }
+            return;
+        }
+
+        // Restart firing if it was previously stopped
+        if (firingCoroutine == null)
+        {
+            firingCoroutine = StartCoroutine(PeriodicFire());
+        }
     }
 
     IEnumerator PeriodicFire()
     {
-        while (!inFuture)
+        while (true)
         {
             // Check if the target is within range
             if (target != null && Vector3.Distance(transform.position, target.position) <= firingRange)
@@ -127,11 +142,7 @@ public class LaserBehavior : MonoBehaviour
             // Set tag to laser
             gameObject.tag = "Laser";
 
-            // Play the laser bounce sound
-            if (other.gameObject.tag == "saber")
-            {
-                other.gameObject.GetComponent<AudioSource>()?.Play();
-            }
+            other.gameObject.GetComponent<AudioSource>()?.Play();
 
             // Set the new velocity
             if (laserRigidbody != null)
