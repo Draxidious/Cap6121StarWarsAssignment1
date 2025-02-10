@@ -51,12 +51,14 @@ public class Player : MonoBehaviour
 	public GameManager gameManager;
 
 	public AudioSource SpecialMoveAudio;
+	public LightSaberSpawner SaberSpawner;
 
 	Vector2 minBar;
 	Vector2 maxBar;
 	float barX;
 
 	bool L;
+	bool specialUsed;
 	public int droidsKilled;
 	public List<Droid> droids = new List<Droid>();
 	public List<Droid> deadDroids = new List<Droid>();
@@ -163,7 +165,19 @@ public class Player : MonoBehaviour
 
 	public void heal()
 	{
-		if ((float)(DateTime.Now.Subtract(lastHeal).TotalSeconds) >= healCooldown)
+		bool inFuture = false;
+		if (droids.Count > 0)
+		{
+			foreach (var d in droids)
+			{
+				if (d.inFuture)
+				{
+					inFuture = true;
+				}
+			}
+
+		}
+		if (((float)(DateTime.Now.Subtract(lastHeal).TotalSeconds) >= healCooldown) && !inFuture)
 		{
 			PlayParticleOnEvent play = healParticles.gameObject.GetComponent<PlayParticleOnEvent>();
 			if (L)
@@ -182,7 +196,18 @@ public class Player : MonoBehaviour
 
 	public void seeFuture()
 	{
-		if ((float)(DateTime.Now.Subtract(lastFuture).TotalSeconds) >= futureCooldown)
+		bool inFuture = false;
+		if (droids.Count > 0) {
+
+			foreach (var d in droids)
+			{
+				if (d.inFuture)
+				{
+					inFuture = true;
+				}
+			}
+		}
+		if ((float)(DateTime.Now.Subtract(lastFuture).TotalSeconds) >= futureCooldown && !inFuture)
 		{
 			lastFuture = DateTime.Now;
 			PlayParticleOnEvent play = futureParticles.gameObject.GetComponent<PlayParticleOnEvent>();
@@ -204,7 +229,19 @@ public class Player : MonoBehaviour
 
 	public void useForce()
 	{
-		if ((float)(DateTime.Now.Subtract(lastForce).TotalSeconds) >= forceCooldown)
+		bool inFuture = false;
+		if (droids.Count > 0)
+		{
+			foreach (var d in droids)
+			{
+				if (d.inFuture)
+				{
+					inFuture = true;
+				}
+			}
+
+		}
+		if (((float)(DateTime.Now.Subtract(lastForce).TotalSeconds) >= forceCooldown)&&!inFuture)
 		{
 			lastForce = DateTime.Now;
 			PlayParticleOnEvent play = forceParticles.gameObject.GetComponent<PlayParticleOnEvent>();
@@ -233,7 +270,7 @@ public class Player : MonoBehaviour
 			{
 				Vector3 forceDirection = d.gameObject.transform.position - gameObject.transform.position;
 				forceDirection = forceDirection / forceDirection.magnitude;
-				rb.AddForce(forceDirection.x * force/(2 * forceMultiplier), force * 0.5f/(2 * forceMultiplier), forceDirection.z * force / (2 * forceMultiplier), ForceMode.Impulse);
+				//rb.AddForce(forceDirection.x * force/(2 * forceMultiplier), force * 0.5f/(2 * forceMultiplier), forceDirection.z * force / (2 * forceMultiplier), ForceMode.Impulse);
 				float damage = (1 - (d.distance / radius)) * forceDamage;
 				d.takeDamage(forceDamage * impact);
 			}
@@ -262,7 +299,7 @@ public class Player : MonoBehaviour
 
 				Vector3 forceDirection = d.gameObject.transform.position - gameObject.transform.position;
 				forceDirection = forceDirection / forceDirection.magnitude;
-				rb.AddForce(forceDirection.x * damage/(2*damgeMultiplier), damage * 0.5f/ (2 * damgeMultiplier), forceDirection.z * damage/ (2 * damgeMultiplier), ForceMode.Impulse);
+				//rb.AddForce(forceDirection.x * damage/(2*damgeMultiplier), damage * 0.5f/ (2 * damgeMultiplier), forceDirection.z * damage/ (2 * damgeMultiplier), ForceMode.Impulse);
 
 				d.takeDamage(damage);
 			}
@@ -275,7 +312,19 @@ public class Player : MonoBehaviour
 
 	public void useLightning()
 	{
-		if ((float)(DateTime.Now.Subtract(lastLightning).TotalSeconds) >= lightningCooldown)
+		bool inFuture = false;
+		if (droids.Count > 0)
+		{
+			foreach (var d in droids)
+			{
+				if (d.inFuture)
+				{
+					inFuture = true;
+				}
+			}
+
+		}
+		if (((float)(DateTime.Now.Subtract(lastLightning).TotalSeconds) >= lightningCooldown) && !inFuture)
 		{
 			lastLightning = DateTime.Now;
 			PlayParticleOnEvent play = lightningParticles.gameObject.GetComponent<PlayParticleOnEvent>();
@@ -293,7 +342,18 @@ public class Player : MonoBehaviour
 
 	public void useSpecialMove()
 	{
-		if (((float)(DateTime.Now.Subtract(lastForce).TotalSeconds) >= forceCooldown) && ((float)(DateTime.Now.Subtract(lastLightning).TotalSeconds) >= lightningCooldown) && ((float)(DateTime.Now.Subtract(lastHeal).TotalSeconds) >= healCooldown) && ((float)(DateTime.Now.Subtract(lastFuture).TotalSeconds) >= futureCooldown))
+		bool inFuture = false;
+		if (droids.Count > 0)
+		{
+			foreach (var d in droids) { 
+				if (d.inFuture)
+				{
+					inFuture = true;
+				}
+			}
+
+		}
+		if (((float)(DateTime.Now.Subtract(lastForce).TotalSeconds) >= forceCooldown) && ((float)(DateTime.Now.Subtract(lastLightning).TotalSeconds) >= lightningCooldown) && ((float)(DateTime.Now.Subtract(lastHeal).TotalSeconds) >= healCooldown) && ((float)(DateTime.Now.Subtract(lastFuture).TotalSeconds) >= futureCooldown) && !inFuture && !specialUsed)
 		{
 			lastForce = DateTime.Now;
 			lastLightning = DateTime.Now;
@@ -304,6 +364,7 @@ public class Player : MonoBehaviour
 			PlayParticleOnEvent playFR = forceParticles.gameObject.GetComponent<PlayParticleOnEvent>();
 			PlayParticleOnEvent playFL = forceParticlesL.gameObject.GetComponent<PlayParticleOnEvent>();
 
+			SaberSpawner.SpawnSabers();
 			playLR.PlayOnce();
 			playLL.PlayOnce();
 			playFL.PlayOnce();
@@ -311,6 +372,7 @@ public class Player : MonoBehaviour
 			SpecialMoveAudio.Play();
 			Lightning(2, 2, 2);
 			Force(2, 2);
+			specialUsed = true;
 		}
 	}
 
@@ -368,59 +430,18 @@ public class Player : MonoBehaviour
 		}
 
 		deadDroids.Clear();
-		if(droids.Count == 0)
-		{
-			LevelUp();
-		}
 	}
-	public void LevelUp()
+	public void Reset()
 	{
-		//Debug.LogWarning("LevelingUp");
-		//Debug.LogWarning(gameManager.State);
-		//if(droidsKilled == 1)
-		//{
-		//	Debug.LogWarning("End of Training");
-		//	gameManager.SetEndTrainingState();
-		//}
-		//else if(droidsKilled == 3)
-		//{
-		//	gameManager.SetLevel2State();
-		//}
-		//else if (droidsKilled == 6)
-		//{
-		//	gameManager.SetLevel3State();
-		//}
-		//else if (droidsKilled == 10)
-		//{
-		//	gameManager.SetBossBattleState();
-		//}
-
-		//gameManager.SetLevel1State();
-		//gameManager.UpdateGameState();
-		//if (gameManager.State == GameState.StartState)
-		//{
-		//	gameManager.SetLevel1State();
-		//}
-		//if (gameManager.State == GameState.TrainingState)
-		//{
-		//	gameManager.SetLevel1State();
-		//}
-		//else if (gameManager.State == GameState.Level1State)
-		//{
-		//	gameManager.SetLevel2State();
-		//}
-		//else if (gameManager.State == GameState.Level2State)
-		//{
-		//	gameManager.SetLevel3State();
-		//}
-
+		specialUsed = false;
+		health = fullHealth;
+		lastFuture = DateTime.Now.Subtract(TimeSpan.FromSeconds(futureCooldown));
+		lastHeal = DateTime.Now.Subtract(TimeSpan.FromSeconds(healCooldown));
+		lastForce = DateTime.Now.Subtract(TimeSpan.FromSeconds(forceCooldown));
+		droidsKilled = 0;
+		SaberSpawner.DespawnSabers();
 	}
 
-	private void GameManagerOnGameStateChanged(GameState state)
-	{
-		
-
-	}
 
 
 }

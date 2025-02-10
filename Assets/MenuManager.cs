@@ -5,7 +5,9 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject startStateMenu;
     [SerializeField] private GameObject trainingStateMenu;
-    private void Awake()
+    [SerializeField] private GameObject deadStateMenu;
+    [SerializeField] private GameObject victoryStateMenu;
+	private void Awake()
     {
         GameManager.OnGameStateChange += GameManagerOnGameStateChanged;
     }
@@ -14,6 +16,8 @@ public class MenuManager : MonoBehaviour
     {
         startStateMenu.SetActive(state == GameState.StartState);
         trainingStateMenu.SetActive(state == GameState.TrainingState);
+        deadStateMenu.SetActive(state == GameState.DeathState);
+        victoryStateMenu.SetActive(state == GameState.VictoryState);
         //UnityEngine.Debug.LogWarning("Menu Manager");
         //StackTrace stackTrace = new StackTrace();
         //for (int i = 1; i < stackTrace.FrameCount; i++) // Start from 1 to skip this method

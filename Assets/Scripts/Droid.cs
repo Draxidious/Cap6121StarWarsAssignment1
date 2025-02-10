@@ -14,7 +14,7 @@ public class Droid : MonoBehaviour
 	public Player player;
 	public TrainingDroid trainingDroid;
 
-	 List<Vector3> futurePositions = new List<Vector3>();
+	List<Vector3> futurePositions = new List<Vector3>();
 	public bool inFuture;
 	public int futureIndex;
 	public int futureSteps;
@@ -35,10 +35,15 @@ public class Droid : MonoBehaviour
 	float healthBarWidth;
 	public PeriodicLaserShooter laserShooter;
 
+	//World width needed to be global
+	float upperX;
+	float lowerX;
+	float upperZ;
+	float lowerZ;
 
 	private BoxCollider damageCollider;
-    public string laserTag = "Laser";
-    public int laserDamage = 10;
+	public string laserTag = "Laser";
+	public int laserDamage = 10;
 	public Transform playerLocation;
 
 
@@ -46,26 +51,25 @@ public class Droid : MonoBehaviour
 
 	void Start()
 	{
+		upperX = worldWidth / 2f;
+		lowerX = -1 * upperX;
+		upperZ = worldWidth / 2f;
+		lowerZ = -1 * upperZ;
 		healthBarRect = healthBar.GetComponent<RectTransform>();
-        damageCollider = GetComponent<BoxCollider>();
-        healthGradient = new Gradient();
+		damageCollider = GetComponent<BoxCollider>();
+		healthGradient = new Gradient();
 		GradientSetup(healthGradient);
 		trainingDroid.player = player.gameObject;
 		fullHealth = health;
 		// Set initial position of the ball at the start point
-		
+
 		for (int i = 0; i < 10; i++)
 		{
 			addFuture(true);
-			
-		}
-		string output = "";
-		foreach (Vector3 v in futurePositions) {
-			output += " ( X:" + v.x + ", Z:" + v.z + ")  ";
-		}
-		Debug.LogWarning(output);
 
-		
+		}
+
+
 		ghost.SetActive(false);
 		healthBarImage = healthBar.GetComponent<Image>();
 		healthBarHeight = healthBarRect.sizeDelta.y;
@@ -82,11 +86,11 @@ public class Droid : MonoBehaviour
 		distance = Mathf.Abs((direction).magnitude);
 		angle = Vector3.Angle(player.transform.forward, horizontalDirection);
 
-		float checkDistance = Mathf.Sqrt( Mathf.Pow((transform.position.x - pointB.position.x), 2) + Mathf.Pow((transform.position.z - pointB.position.z), 2));
+		float checkDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - pointB.position.x), 2) + Mathf.Pow((transform.position.z - pointB.position.z), 2));
 		float checkDistanceGhost = Mathf.Sqrt(Mathf.Pow((ghost.transform.position.x - pointB.position.x), 2) + Mathf.Pow((ghost.transform.position.z - pointB.position.z), 2));
 
 
-		if ((Mathf.Abs(checkDistance) <0.6f) || (inFuture && (Mathf.Abs(checkDistanceGhost ) < 0.6f)))
+		if ((Mathf.Abs(checkDistance) < 0.6f) || (inFuture && (Mathf.Abs(checkDistanceGhost) < 0.6f)))
 		{
 			reachedPoint();
 
@@ -108,22 +112,47 @@ public class Droid : MonoBehaviour
 
 	public void addFuture(bool init = false)
 	{
-		float upper = worldWidth / 2f;
-		float lower = -1 * upper;
-		float x = UnityEngine.Random.Range(lower, upper);
-		float z = UnityEngine.Random.Range(lower, upper);
+
+		float x = UnityEngine.Random.Range(lowerX, upperX);
+		float z = UnityEngine.Random.Range(lowerZ, upperZ);
 		float currentDistance = Mathf.Sqrt(Mathf.Pow((transform.localPosition.x - playerLocation.localPosition.x), 2) + Mathf.Pow((transform.localPosition.z - playerLocation.localPosition.z), 2));
-		float newDistance = Mathf.Sqrt(Mathf.Pow((playerLocation.localPosition.x -  x), 2) + Mathf.Pow((playerLocation.localPosition.z - z), 2));
-		
+		float newDistance = Mathf.Sqrt(Mathf.Pow((playerLocation.localPosition.x - x), 2) + Mathf.Pow((playerLocation.localPosition.z - z), 2));
+
 		while (newDistance <= currentDistance && !training)
 		{
-			x = UnityEngine.Random.Range(lower, upper);
-			z = UnityEngine.Random.Range(lower, upper);
+			x = UnityEngine.Random.Range(lowerX, upperX);
+			z = UnityEngine.Random.Range(lowerZ, upperZ);
 			newDistance = Mathf.Sqrt(Mathf.Pow((transform.position.x - x), 2) + Mathf.Pow((transform.position.z - z), 2));
 		}
+		if (!training)
+		{
+			//Move range of randomly generated points 50% closer to the player
+			if (playerLocation.localPosition.x > x)
+			{
+				upperX = (playerLocation.localPosition.x + x) / 2;
+				lowerX = upperX - worldWidth / 2;
+			}
+			else
+			{
+				lowerX = (playerLocation.localPosition.x + x) / 2;
+				upperX = lowerX +worldWidth / 2;
+			}
+			if (playerLocation.localPosition.z > z)
+			{
+				upperZ = (playerLocation.localPosition.z +z) / 2;
+				lowerZ = upperZ - worldWidth / 2;
+			}
+			else
+			{
+				lowerZ = (playerLocation.localPosition.z +z) / 2;
+				upperZ = lowerZ - +worldWidth / 2;
+			}
+		}
 		//Debug.LogWarning(newDistance >= currentDistance);
-		Vector3 pos = new Vector3(UnityEngine.Random.Range(lower, upper), 0.5f, UnityEngine.Random.Range(lower, upper));
+		Vector3 pos = new Vector3(x, 0.5f, z);
+
 		futurePositions.Add(pos);
+
 		if (!init)
 		{
 			futurePositions.RemoveAt(0);
@@ -134,7 +163,7 @@ public class Droid : MonoBehaviour
 	{
 
 		pointB.localPosition = futurePositions[futureIndex];
-		
+
 		if (inFuture)
 		{
 			futureIndex++;
@@ -148,21 +177,14 @@ public class Droid : MonoBehaviour
 				shooter.inFuture = false;
 				//rb.constraints = RigidbodyConstraints.None;
 				healthBar.SetActive(true);
-
-				string output = "";
-				foreach (Vector3 v in futurePositions)
-				{
-					output += " ( X:" + v.x + ", Z:" + v.z + ")  ";
-				}
-				Debug.LogWarning(output);
 			}
 		}
 		else
 		{
 			addFuture();
 
-		}
 			trainingDroid.reachedPoint();
+		}
 	}
 
 	public void healthBarUI()
@@ -171,7 +193,7 @@ public class Droid : MonoBehaviour
 		float fillAmount = health / fullHealth;
 
 		// Set the fill amount of the image
-		healthBarImage.rectTransform.sizeDelta = new Vector2(fillAmount*healthBarWidth, healthBarHeight);
+		healthBarImage.rectTransform.sizeDelta = new Vector2(fillAmount * healthBarWidth, healthBarHeight);
 		healthBarRect.sizeDelta = new Vector2(healthBarWidth * fillAmount, healthBarHeight);
 
 		// Set the color based on the health percentage
@@ -181,7 +203,7 @@ public class Droid : MonoBehaviour
 	public void takeDamage(float Damage)
 	{
 		health -= Damage;
-		if(health <= 0)
+		if (health <= 0)
 		{
 			player.deadDroids.Add(this);
 
@@ -201,21 +223,21 @@ public class Droid : MonoBehaviour
 		g.SetKeys(colors, alphas);
 	}
 
-    private void OnDrawGizmosSelected()
-    {
-        // Draw the firing range in the editor
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, worldWidth);
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(laserTag))
-        {
+	private void OnDrawGizmosSelected()
+	{
+		// Draw the firing range in the editor
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireSphere(transform.position, worldWidth);
+	}
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.CompareTag(laserTag))
+		{
 			takeDamage(laserDamage);
 			Destroy(other.gameObject);
 			player.killDroids();
-        }
-    }
+		}
+	}
 
 
 }

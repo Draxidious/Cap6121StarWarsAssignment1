@@ -8,9 +8,10 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private TrainingMode Level1Mode;
     [SerializeField] private TrainingMode Level2Mode;
     [SerializeField] private TrainingMode Level3Mode;
+	[SerializeField] private TrainingMode BossMode;
 
 
-    public List<GameObject> spawnedDroids = new List<GameObject>();
+	public List<GameObject> spawnedDroids = new List<GameObject>();
 
     public Player player;
 
@@ -48,15 +49,25 @@ public class UnitManager : MonoBehaviour
     }
     public void StartLevel3()
     {
-        List<Vector3> spawnLocations = Level2Mode.getSpawnLocations();
-        List<GameObject> droidObjects = Level2Mode.getDroidObjects();
+        List<Vector3> spawnLocations = Level3Mode.getSpawnLocations();
+        List<GameObject> droidObjects = Level3Mode.getDroidObjects();
         for (int i = 0; i < spawnLocations.Count; i++)
         {
             SpawnDroid(spawnLocations[i], droidObjects[i]);
         }
     }
+	public void StartBoss()
+	{
+		List<Vector3> spawnLocations = BossMode.getSpawnLocations();
+		List<GameObject> droidObjects = BossMode.getDroidObjects();
+		for (int i = 0; i < spawnLocations.Count; i++)
+		{
+			SpawnDroid(spawnLocations[i], droidObjects[i]);
+		}
+	}
 
-    public void Update()
+
+	public void Update()
     {
         if (spawnedDroids.Count > 0)
         {
@@ -69,9 +80,10 @@ public class UnitManager : MonoBehaviour
 
             if (!alive)
             {
-                spawnedDroids.Clear();
+				//player.killDroids();
+				spawnedDroids.Clear();
                 spawnedDroids = new List<GameObject>();
-                Debug.LogWarning("we got hereeeee: " + GameManager.instance.State);
+                //Debug.LogWarning("we got hereeeee: " + GameManager.instance.State);
                 switch (GameManager.instance.State)
                 {
                     case GameState.TrainingState:
@@ -87,12 +99,35 @@ public class UnitManager : MonoBehaviour
                         GameManager.instance.SetLevel3State();
                         break;
                     case GameState.Level3State:
-                        break;
-                    default:
+						GameManager.instance.SetBossBattleState();
+						break;
+					case GameState.BossBattleState:
+						GameManager.instance.SetVictoryState();
+						player.Reset();
+
+						break;
+					default:
                         break;
 
                 }
+
             }
+            if(player.health <= 0)
+            {
+				player.killDroids();
+
+				foreach (GameObject obj in spawnedDroids)
+				{
+					if (obj != null)
+					{
+						Destroy(obj);
+					}
+				}
+				spawnedDroids.Clear ();
+				GameManager.instance.SetDeathState();
+				player.Reset();
+			}
+        
         }
     }
 
@@ -112,9 +147,14 @@ public class UnitManager : MonoBehaviour
             case GameState.Level3State:
                 StartLevel3();
                 break;
-            default:
+			case GameState.BossBattleState:
+				StartBoss();
+				break;
+			default:
+                player.killDroids();
                 print("DESTROY ALL DROIDS: " + spawnedDroids);
-                foreach (GameObject obj in spawnedDroids)
+
+				foreach (GameObject obj in spawnedDroids)
                 {
                     if (obj != null)
                     {
